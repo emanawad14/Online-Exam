@@ -1,10 +1,10 @@
 
 
 
-<div class="sign-in-container  flex justify-between bg-[#FFFFFF] ">
-    <div class="left-section   w-[50%] relative  h-[64rem]">
+<!-- <div class="sign-in-container flex justify-between bg-[#FFFFFF] ">
+    <div class="left-section  w-[50%]  h-[64rem]">
      
-        <div class="w-[30.125rem] h-[48.2244rem] absolute top-[5rem] left-[5rem] gap-[5rem] ">
+        <div class="w-[30.125rem] h-[48.2244rem] pt-[5rem] pl-[4.9375rem] pr-[9.1875rem] pb-[10.7762rem] gap-[5rem] ">
            
             <div class="w-[30.125rem] gap-[.5rem] h-[16.0625rem]">
                 <h1>Welcome to </h1>
@@ -21,9 +21,42 @@
     </div>
 
 
-    <div class="right-section w-[50%] left-[1px] ">
+    <div class="right-section  pl-[10.0625rem] w-[50%]  ">
      
         <router-outlet></router-outlet>
     </div>
+  </div> -->
+  
+
+
+
+
+  <div class="sign-in-container flex flex-col md:flex-row justify-between bg-white min-h-screen">
+  
+    <!-- Left Section -->
+    <div class="left-section w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left p-6 md:p-12 shadow-lg rounded-r-[100px] bg-[#F0F4FC]">
+      
+      <div class="max-w-md">
+        <h1 class="text-3xl md:text-5xl font-bold leading-[150%]">Welcome to</h1>
+        <h2 class="text-4xl md:text-6xl font-bold leading-[150%] text-[#122D9C]">Elevate</h2>
+        <p class="text-gray-700 text-lg md:text-xl leading-8 mt-4">
+          Quidem autem voluptatibus qui quaerat aspernatur architecto natus.
+        </p>
+      </div>
+      
+      <div class="w-full max-w-sm mt-8">
+        <img src="/New folder/bro.png" alt="Study Illustration" class="w-full h-auto">
+      </div>
+  
+    </div>
+  
+    <!-- Right Section -->
+    <div class="right-section w-full md:w-1/2 flex justify-center items-center p-6 md:p-16">
+
+      
+      <router-outlet></router-outlet>
+    </div>
+  
   </div>
+  
   

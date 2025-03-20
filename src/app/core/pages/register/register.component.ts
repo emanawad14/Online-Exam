@@ -4,11 +4,11 @@ import { SocialComponent } from "../../component/social/social.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 
 import { AuthLibraryService } from 'auth-library';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule,NavComponent, SocialComponent],
+  imports: [ReactiveFormsModule,NavComponent, SocialComponent , RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })

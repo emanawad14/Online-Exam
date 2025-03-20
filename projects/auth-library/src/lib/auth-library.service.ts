@@ -9,6 +9,10 @@ import { loginRes } from './interfaces/loginResponse';
 import { registerData } from './interfaces/registerData';
 import { registerRes } from './interfaces/registerResponse';
 import { codeData, CodeRes } from './interfaces/code';
+import { forgetDataEmail } from './interfaces/forgetemail';
+import { forgetRes } from './interfaces/forgetRespo';
+import { passwordData } from './interfaces/passwordData';
+import { passwordRes } from './interfaces/passwordResp';
 
 
 
@@ -51,7 +55,7 @@ export class AuthLibraryService  implements AuthApi{
 
  //***************************** ForgetPassword  ************************* */
 
-  ForgetPassword(data: any): Observable<any> {
+  ForgetPassword(data: forgetDataEmail): Observable<forgetRes> {
     return this.httpclient.post(AuthEndPoint.FORGETPASSWORD,data).pipe(
       map((res:any)=>this._AuthLibraryAdaptorService.adaptForget(res)),
       
@@ -73,7 +77,7 @@ export class AuthLibraryService  implements AuthApi{
 
    //************************* RestPassword ******************************** */
 
-    RestPassword(data: any): Observable<any> {
+    RestPassword(data: passwordData): Observable<passwordRes> {
        return this.httpclient.put(AuthEndPoint.RESTPASSWORD,data).pipe(
         map((res:any)=>this._AuthLibraryAdaptorService.adaptPassword(res)),
         catchError((error)=>of(error))

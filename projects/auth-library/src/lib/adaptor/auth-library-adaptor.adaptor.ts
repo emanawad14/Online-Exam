@@ -5,6 +5,9 @@ import { adaptForget } from '../interfaces/adaptForget';
 import { adaptCode } from '../interfaces/adaptcode';
 import { Adaptorpass } from '../interfaces/adaptpassword';
 import {  CodeRes } from '../interfaces/code';
+import { forgetData, forgetRes } from '../interfaces/forgetRespo';
+import { codeId } from '../interfaces/codeData';
+import { passwordApiData, passwordRes } from '../interfaces/passwordResp';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +25,19 @@ export class AuthLibraryAdaptorService implements Adaptor ,adaptForget , adaptCo
   }
 
 
-  adaptForget(data:any): any {
+  adaptForget(data:forgetData): forgetRes {
     return {
       message: data.message,
       info: data.info,
       
     };
-
-
   }
 
 
+
+
   
-  adaptCode(data:any):CodeRes
+  adaptCode(data:codeId):CodeRes
   {
     console.log(data);
     
@@ -55,7 +58,7 @@ export class AuthLibraryAdaptorService implements Adaptor ,adaptForget , adaptCo
 
   
 
-  adaptPassword(data:any):any
+  adaptPassword(data:passwordApiData):passwordRes
   {
     return{
       message:data.message,

@@ -19,6 +19,9 @@ import { Router } from '@angular/router';
 export class ForgetpasswordComponent {
   isSpinner: boolean = false;
   step: number = 1;
+
+
+  
   private readonly _Router = inject(Router);
 
   //*********************** ForgetPassword  ***************************** */

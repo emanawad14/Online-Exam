@@ -11,6 +11,8 @@ export const routes: Routes =
             {path:'forgetPassword' , loadComponent:()=>import('./core/pages/forgetpassword/forgetpassword.component').then((c)=>c.ForgetpasswordComponent), title:'ForgetPassword'},
 
         ]
-    }
+    },
+
+    {path:'home' , loadComponent:()=>import('./core/pages/home/home.component').then((c)=>c.HomeComponent),title:'Home'},
 
 ];

@@ -1,3 +1,4 @@
+
 import { Injectable, inject } from '@angular/core';
 import { AuthApi } from './base/AuthApi';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -23,15 +24,19 @@ import { passwordRes } from './interfaces/passwordResp';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthLibraryService  implements AuthApi{
+export class AuthLibraryService  implements AuthApi {
+
+
+  
 
   constructor(private httpclient:HttpClient 
     ,
-    private _AuthLibraryAdaptorService:AuthLibraryAdaptorService , 
-      
+    private _AuthLibraryAdaptorService:AuthLibraryAdaptorService ,) { }
+  
+ 
+  
 
-
-  ) { }
+  
   
 
 
@@ -43,6 +48,9 @@ export class AuthLibraryService  implements AuthApi{
         catchError((error)=>of(error))
       )
   }
+
+
+
   //************************* Register ******************************** */
 
  Register(data:registerData):Observable<registerRes> {

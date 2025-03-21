@@ -8,4 +8,5 @@ export abstract class AuthApi{
    abstract RestCode(data:any):Observable<any>
    abstract RestPassword(data:any):Observable<any>
 
+
 }

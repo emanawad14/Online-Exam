@@ -3,6 +3,7 @@ import { AuthLayoutComponent } from './core/layout/auth-layout/auth-layout.compo
 
 export const routes: Routes =
 [
+    
     {path:'' , component:AuthLayoutComponent , title:'Auth' ,
         children:
         [
@@ -13,6 +14,6 @@ export const routes: Routes =
         ]
     },
 
-    {path:'home' , loadComponent:()=>import('./core/pages/home/home.component').then((c)=>c.HomeComponent),title:'Home'},
+    {path:'home' , loadComponent:()=>import('./Features/pages/home/home.component').then((c)=>c.HomeComponent),title:'Home'},
 
 ];

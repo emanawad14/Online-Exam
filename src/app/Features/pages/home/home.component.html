@@ -1,0 +1,102 @@
+
+
+<section class="">
+    
+    <div class="flex">
+
+
+        <div class="ms-6 mt-6 " >
+            <img class="mb-8 " src="/New folder/Final Logo 1.png" alt="">
+            <ul>
+                <li class="mt-6"> <i class="fa-solid fa-chart-line text-[#4461F2]  me-5"></i> Dashboard</li>
+                <li class="mt-6"> <i class="fa-solid fa-clock-rotate-left text-[#4461F2]  me-5"></i>Quiz History</li>
+                <li class="mt-12"> <i class="fa-solid fa-arrow-right-from-bracket  text-[#4461F2]  me-5"></i> Log Out</li>
+            </ul>
+        </div>
+    
+        <div class="w-[1063px] ms-12  mt-6">
+        
+               
+               
+                    <input  type="search"
+                    class="bg-gray-50 border border-gray-300
+                     text-gray-900 text-sm rounded-lg focus:ring-blue-500
+                      focus:border-blue-500 block w-[70%] p-2.5" 
+                      placeholder="Search Quiz" required />
+
+                      
+          <div class=" mt-12 ">
+
+            <div class="flex justify-between items-center">
+                <h3 class="text-[24px] text-[#4461F2] font-[500] me-3 ">Quizes</h3>
+                <h3 (click)="sendView()" class="text-[24px] text-[#4461F2] font-[500] me-3 cursor-pointer">View All</h3>
+            </div>
+             
+          
+            
+               
+            <div >
+                @for (item of subjects; track $index)
+                {
+                   <div class="grid md:grid-cols-3">
+   
+                      
+                   
+                      
+                    <div>
+                        <img (click)="getAllSubject(item._id)" [src]="item.icon"  alt="">
+                        
+                   
+                    </div>
+                        
+                       
+       
+                     </div>
+                }
+            </div>
+         
+
+          </div>
+               
+          <div>
+            <h1>Front-End Quiz</h1>
+
+           
+            @for (exam of exams; track $index) 
+            {
+                <div class="flex justify-between items-center">
+                  
+                    <div>
+                        <h2> {{exam.title}} </h2>
+                        <h2> {{exam.numberOfQuestions}} </h2>
+                    </div>
+                    <div>
+                        <h2 class="text-center"> {{exam.duration}} </h2>
+                        <button class="bg-[#4461F2] rounded-[10px] text-white pt-[4px] pb-[4px] ps-[24px] pe-[24px] ">start</button>
+                    </div>
+
+    
+                </div>
+            }
+
+
+          </div>
+                      
+        </div>
+
+       
+        
+
+
+        <!-- <div class=" ms-6 mt-6">
+              
+            <button class="bg-[#4461F2] text-white rounded-[1.25rem] pt-[1rem] pe-[2rem] pb-[1rem] ps-[2rem]">Start Quiz</button>
+                
+            
+        </div> -->
+
+        
+
+
+    </div>
+</section>

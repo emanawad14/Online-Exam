@@ -9,14 +9,14 @@ import { AuthLibraryService } from 'auth-library';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule  ,RouterLink, RouterLinkActive, NavComponent, SocialComponent],
+  imports: [ReactiveFormsModule  ,RouterLink, NavComponent, SocialComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
 
   isLoading:boolean=false;
- MsgError:string='';
+   MsgError:string='';
   MsgSuccess:string='';
 
   constructor(private _authLibraryService:AuthLibraryService ,

@@ -10,6 +10,9 @@ export class HomeservicService {
 
   constructor( private httpclient:HttpClient) { }
 
+
+  //************************  getAllSubject ************************ */
+
   getAllSubject():Observable<any>
 
   {
@@ -24,6 +27,8 @@ export class HomeservicService {
     )
     
   }
+
+  //**************************  getAllSubjectView ***************************** */
 
 
 
@@ -42,6 +47,7 @@ export class HomeservicService {
     
   }
 
+  //**************************  getAllExamSubject***************************** */
 
   getAllExamSubject(id:string):Observable<any>
   {
@@ -54,6 +60,19 @@ export class HomeservicService {
       }
     )
     
+  }
+
+  //**************************  getAllQuestionExam ***************************** */
+
+  getAllQuestionExam():Observable<any>
+  {
+    return this.httpclient.get(`https://exam.elevateegy.com/api/v1/questions?exam=670070a830a3c3c1944a9c63`,
+      {
+        headers:{
+          token:this.myToken
+        }
+      }
+    )
   }
   
 }

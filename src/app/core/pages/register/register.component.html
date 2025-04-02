@@ -252,7 +252,7 @@
                   <span class="font-medium"></span> phone is required
                 </div>
               }
-              @else if (RegisterForm.get('phone')?.getError('minlength')) 
+              @else if (RegisterForm.get('phone')?.getError('pattern')) 
               {
                 <div>
                   <span class="font-medium"></span> Enter Valid Phone

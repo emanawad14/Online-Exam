@@ -1,6 +1,5 @@
 
-
-<section class="">
+<!-- <section class="">
     
     <div class="flex">
 
@@ -35,25 +34,29 @@
           
             
                
-            <div >
-                @for (item of subjects; track $index)
+            
+                
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5  m-2">
+                @for (item of subjects; track $index) 
                 {
-                   <div class="grid md:grid-cols-3">
-   
-                      
+
                    
-                      
-                    <div>
-                        <img (click)="getAllSubject(item._id)" [src]="item.icon"  alt="">
-                        
-                   
+                    <div class="relative">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 w-[80%]  p-2 bg-red-300 bottom-7 text-center">
+                            <h2>Lorem ipsum dolor sit amet.</h2>
+                        </div>
+                        <div>
+                            <img (click)="getAllSubject(item._id)" [src]="item.icon" alt="">
+                        </div>
                     </div>
-                        
-                       
-       
-                     </div>
                 }
-            </div>
+   
+                     
+                    
+                   
+   
+                 </div>
+        
          
 
           </div>
@@ -88,15 +91,140 @@
         
 
 
-        <!-- <div class=" ms-6 mt-6">
-              
-            <button class="bg-[#4461F2] text-white rounded-[1.25rem] pt-[1rem] pe-[2rem] pb-[1rem] ps-[2rem]">Start Quiz</button>
-                
-            
-        </div> -->
+      
+        
 
         
 
 
     </div>
+</section> -->
+
+
+
+<section class="flex flex-col md:flex-row bg-gray-100">
+    <!-- Sidebar -->
+    <div class="md:w-1/5 w-full bg-white shadow-md p-6 fixed md:relative h-screen md:h-auto z-50" id="sidebar">
+        <button class="md:hidden block text-lg text-gray-600" onclick="toggleSidebar()">&#9776;</button>
+        <img class="mb-8" src="/New folder/Final Logo 1.png" alt="">
+        <ul>
+            <li class="mt-6 flex items-center cursor-pointer"> 
+                <i class="fa-solid fa-chart-line text-[#4461F2] me-5"></i> Dashboard
+            </li>
+            <li class="mt-6 flex items-center cursor-pointer"> 
+                <i class="fa-solid fa-clock-rotate-left text-[#4461F2] me-5"></i> Quiz History
+            </li>
+            <li (click)="logOut()" class="mt-12 flex items-center cursor-pointer text-red-500"> 
+                <i class="fa-solid fa-arrow-right-from-bracket text-[#4461F2] me-5"></i> Log Out
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="md:w-3/4 w-full md:ms-12 ms-0 p-6">
+        <!-- Search Bar -->
+        <input type="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-2/3 p-2.5" placeholder="Search Quiz" required />
+
+        <!-- Quizzes Section -->
+       
+        @if (step ==1) 
+        {
+            <div class="mt-12">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-[24px] text-[#4461F2] font-medium">Quizes</h3>
+                    <h3 (click)="sendView()" class="text-[24px] text-[#4461F2] font-medium cursor-pointer">View All</h3>
+                </div>
+                
+                <!-- Subject Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                    @for (item of subjects; track $index) {
+                        <div class="relative bg-white shadow-lg rounded-lg overflow-hidden">
+                            <img (click)="getAllSubject(item._id)" [src]="item.icon" alt="" class="w-full h-50 object-cover cursor-pointer">
+                            <div class="absolute bottom-0 left-0 right-0 bg-red-300 p-2 text-center">
+                                <h2 class="text-white font-semibold">{{item.name}}</h2>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Front-End Quiz Section -->
+        
+        @else if (step==2)
+         {
+            <div class="mt-12">
+                <h1 class="text-[18px] font-[500]">Front-End Quiz</h1>
+                @for (exam of exams; track exam._id; let i=$index) {
+                    <div class="flex flex-col md:flex-row justify-between items-center bg-[#F9F9F9] p-4 rounded-lg mt-4">
+    
+                      
+                        <div class="flex justify-center items-center gap-3">
+                            <div>
+                                <img src="/New folder/skill-icons_html.png" alt="">
+                            </div>
+                            <div class="text-center md:text-left">
+                               
+                                <h2 class="text-[#0F0F0F] font-[500] text-[16px]">{{exam.title}}</h2>
+                                <p class="text-[#535353] font-[400] text-[13px]">{{exam.numberOfQuestions}} Question </p>
+                            </div>
+                        </div>
+                       
+                        
+                        <div class="text-center md:text-right">
+                            <p class="text-[#0F0F0F] font-[400] text-[13px] text-center mb-2">{{exam.duration}} Minutes</p>
+                            <button  (click)="openModel(i)" class="bg-[#4461F2] text-white rounded-lg px-6 py-2">Start</button>
+                        </div>
+                    </div>
+                }
+            </div>
+         }
+    </div>
 </section>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('hidden');
+    }
+</script>
+
+
+
+
+
+
+
+
+  
+ 
+  <div #items id="static-modal" data-modal-backdrop="static"
+   tabindex="-1" aria-hidden="true" class="hidden bg-slate-800 bg-opacity-40
+    overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center
+     items-center w-full h-screen">
+      <div class="relative p-4 w-full max-w-lg">
+          
+          <div class="relative bg-white rounded-[20px] shadow-lg w-[500px] p-6">
+            
+            <h1 class="text-xl font-semibold">Instructions</h1>
+            <ul class="space-y-2 mt-2">
+                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+            </ul>
+            <div class="flex justify-center mt-6">
+                <button (click)="getQuestions()" class="bg-blue-600  text-white font-medium py-2 px-12 rounded-full w-full ">
+                    Start
+                </button>
+            </div>
+          </div>
+      </div>
+  </div>
+
+  
+
+  
+  
+
+  

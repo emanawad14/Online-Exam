@@ -1,0 +1,14 @@
+
+section
+{
+    .home{
+        img{
+          transition: all .4s;
+          &:hover{
+            border: 6px #1966cad7 solid;
+          }
+        }
+    
+    }
+}
+

@@ -102,9 +102,9 @@
 
 
 
-<section class="flex flex-col md:flex-row bg-gray-100">
+<section class="flex flex-col md:flex-row bg-[#FFFFFF]">
     <!-- Sidebar -->
-    <div class="md:w-1/5 w-full bg-white shadow-md p-6 fixed md:relative h-screen md:h-auto z-50" id="sidebar">
+    <div class="md:w-1/5 w-full bg-white shadow-md p-6 fixed md:relative h-screen  z-50" id="sidebar">
         <button class="md:hidden block text-lg text-gray-600" onclick="toggleSidebar()">&#9776;</button>
         <img class="mb-8" src="/New folder/Final Logo 1.png" alt="">
         <ul>
@@ -121,10 +121,15 @@
     </div>
     
     <!-- Main Content -->
-    <div class="md:w-3/4 w-full md:ms-12 ms-0 p-6">
+    <div class="md:w-3/4 w-full md:ms-12 ms-0 p-6 ">
         <!-- Search Bar -->
-        <input type="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-2/3 p-2.5" placeholder="Search Quiz" required />
+        
+        
+        <div class="flex justify-center items-start gap-10">
+            <input  [(ngModel)]="text" type="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-[1] rounded-[20px] focus:ring-blue-500 focus:border-blue-500 block w-full md:w-2/3 p-4" placeholder="Search Quiz" required />
+        <button class="bg-[#4461F2] rounded-[20px] text-white pt-[16px] pb-[16px] ps-[32px] pe-[32px] ">start Quiz</button>
 
+        </div>
         <!-- Quizzes Section -->
        
         @if (step ==1) 
@@ -136,12 +141,13 @@
                 </div>
                 
                 <!-- Subject Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
-                    @for (item of subjects; track $index) {
+                <div class=" home grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                    @for (item of subjects  | search:text; track $index) {
                         <div class="relative bg-white shadow-lg rounded-lg overflow-hidden">
-                            <img (click)="getAllSubject(item._id)" [src]="item.icon" alt="" class="w-full h-50 object-cover cursor-pointer">
-                            <div class="absolute bottom-0 left-0 right-0 bg-red-300 p-2 text-center">
+                            <img (click)="getAllSubject(item._id)" [src]="item.icon" alt="" class="w-full h-50 object-cover cursor-pointer ">
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-[80%] rounded-[9px]  p-2 bg-[#1931ca67] bottom-7 text-center">
                                 <h2 class="text-white font-semibold">{{item.name}}</h2>
+                                <h2 class="text-[13px] font-[700] text-white">Voluptatem aut ut dignissimos blanditiis</h2>
                             </div>
                         </div>
                     }
@@ -198,7 +204,50 @@
 
   
  
-  <div #items id="static-modal" data-modal-backdrop="static"
+ 
+
+    <div #items id="static-modal" data-modal-backdrop="static"
+    tabindex="-1" aria-hidden="true" class="hidden bg-slate-800 bg-opacity-40
+     overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center
+      items-center w-full h-screen">
+       <div class="relative p-4 w-full max-w-lg">
+           
+          
+        @if(questiontype==2)
+        {
+            <div class="relative bg-white rounded-[20px] shadow-lg w-[500px] p-6">
+             
+                <h1 class="text-xl font-semibold">Instructions</h1>
+                <ul class="space-y-2 mt-2">
+                    <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                    <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                    <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                    <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
+                </ul>
+                <div class="flex justify-center mt-6">
+                    <button (click)="getQuestions()" class="bg-blue-600  text-white font-medium py-2 px-12 rounded-full w-full ">
+                        Start
+                    </button>   
+                </div>
+              </div>
+        }
+        @else if (questiontype==3) {
+            <div class="relative bg-white rounded-[20px] shadow-lg w-[500px] p-6">
+            
+           
+                @for (item of questions; track $index) 
+                {
+    
+                    <h2> {{item.question}} </h2>
+                }
+              </div>
+        }
+       </div>
+   </div>
+
+
+  <!-- question -->
+  <!-- <div #question id="default-modal" data-modal-backdrop="static"
    tabindex="-1" aria-hidden="true" class="hidden bg-slate-800 bg-opacity-40
     overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center
      items-center w-full h-screen">
@@ -206,21 +255,15 @@
           
           <div class="relative bg-white rounded-[20px] shadow-lg w-[500px] p-6">
             
-            <h1 class="text-xl font-semibold">Instructions</h1>
-            <ul class="space-y-2 mt-2">
-                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
-                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
-                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
-                <li class="text-gray-700">• Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-            <div class="flex justify-center mt-6">
-                <button (click)="getQuestions()" class="bg-blue-600  text-white font-medium py-2 px-12 rounded-full w-full ">
-                    Start
-                </button>
-            </div>
+           
+            @for (item of questions; track $index) 
+            {
+
+                <h2> {{item.question}} </h2>
+            }
           </div>
       </div>
-  </div>
+  </div> -->
 
   
 

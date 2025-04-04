@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
 import { HomeservicService } from '../../services/home/homeservic.service';
 import { Isubject } from '../../interfaces/isubject';
 import { Iexam } from '../../interfaces/iexam';
@@ -7,21 +7,28 @@ import { Modal } from 'flowbite';
 import { IQuestions } from '../../interfaces/i-questions';
 import { LogoutService } from '../../services/logout/logout.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { SearchPipe } from '../../pipes/search.pipe';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [SearchPipe , FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent  implements OnInit , AfterViewInit{
+export class HomeComponent  implements OnInit , AfterViewInit  , OnDestroy{
 
 
   private readonly _homeservicService=inject(HomeservicService);
   private readonly _LogoutService=inject(LogoutService);
   private readonly _Router=inject(Router);
+
+  homeSubscribtion:Subscription=new(Subscription)
+  text:string=''
   step:number=1
+  questiontype:number=2
  subjects:Isubject[]=[]
  exams:Iexam[]=[]
  questions:IQuestions[]=[]
@@ -38,6 +45,7 @@ export class HomeComponent  implements OnInit , AfterViewInit{
 
 
   @ViewChild('items') items:ElementRef=new ElementRef('')
+  @ViewChild('question') question :ElementRef=new ElementRef('')
 
 
    options:any = {
@@ -70,10 +78,44 @@ openModel(index:number)
   modal.show()
 }
 
+//************************************************** */
+
+rtoptions:any = {
+  placement: 'bottom-right',
+  backdrop: 'dynamic',
+  backdropClasses:
+      'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+  closable: true,
+  onHide: () => {
+      console.log('modal is hidden');
+  },
+  onShow: () => {
+      console.log('modal is shown');
+  },
+  onToggle: () => {
+      console.log('modal has been toggled');
+  },
+};
+
+instanceOptionsert = {
+id: 'default-modal',
+override: true
+};
+
+openModelquestion(index:number)
+{
+
+let ele=this.items.nativeElement as HTMLElement
+const modal = new Modal(ele, this.rtoptions, this.instanceOptionsert);
+modal.show()
+}
   ngAfterViewInit(): void {
     console.log(this.items);
+    console.log(this.question);
     
   }
+
+
 
  
   
@@ -82,7 +124,7 @@ openModel(index:number)
   //******************** SendData *************************** */
   sendData()
   {
-   this._homeservicService.getAllSubject().subscribe(
+   this.homeSubscribtion=this._homeservicService.getAllSubject().subscribe(
     {
       next:(res)=>
       {
@@ -169,7 +211,14 @@ openModel(index:number)
       {
         next:(res)=>{
           console.log(res);
-          this.questions=res.questions
+          console.log('Eman',res);
+          this.questions=res.questions 
+          if(res.message ==='success')
+          {
+            this.questiontype ==3
+          }
+          
+
           
         },
         error:(err)=>
@@ -180,6 +229,18 @@ openModel(index:number)
       }
     )
   }
+
+
+  
+  
+
+
+
+
+
+
+
+
 
   //************************** logOut  ******************************* */
 
@@ -202,6 +263,13 @@ openModel(index:number)
     )
 
     this._Router.navigate(['/login'])
+  }
+
+
+
+
+  ngOnDestroy(): void {
+      this.homeSubscribtion.unsubscribe()
   }
   
 }

@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angula
 
 import { AuthLibraryService } from 'auth-library';
 import { Router, RouterLink } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -29,7 +30,9 @@ export class RegisterComponent {
   )
 
   constructor(private _authLibraryService:AuthLibraryService){}
-  private router=inject(Router)
+  private readonly router=inject(Router);
+  private readonly _ToastrService=inject(ToastrService);
+
 
   SumbitRegister()
   {
@@ -50,6 +53,7 @@ export class RegisterComponent {
                 
                  setTimeout(() => {
                   this.router.navigate(['/login']);
+                  this._ToastrService.show(res.message , ' Please complete the login')
                   
                  }, 2000);
              }

@@ -20,5 +20,8 @@ export const routes: Routes =
     {path:'home' , loadComponent:()=>import('./Features/pages/home/home.component').then((c)=>c.HomeComponent),title:'Home'
         , canActivate:[authGuard]
     },
+    {path:'quiz' , loadComponent:()=>import('./Features/pages/quiz/quiz.component').then((c)=>c.QuizComponent),title:'quiz'
+        , canActivate:[authGuard]
+    },
 
 ];

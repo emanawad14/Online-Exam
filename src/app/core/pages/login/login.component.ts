@@ -1,10 +1,11 @@
 import { AuthservicesService } from './../../services/authservices.service';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { NavComponent } from "../../component/nav/nav.component";
 import { SocialComponent } from "../../component/social/social.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { AuthLibraryService } from 'auth-library';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class LoginComponent {
    private _authServices:AuthservicesService
   ){}
 
-
+     private readonly _ToastrService = inject(ToastrService)
 
   FormLogin:FormGroup=new FormGroup(
     {
@@ -61,6 +62,7 @@ export class LoginComponent {
          
 
           this.router.navigate(['/home'])
+          this._ToastrService.success(res.message, 'You have been successfully logged in.')
 
 
           

@@ -56,6 +56,27 @@ export class ForgetpasswordComponent {
     }
   }
 
+
+  resendCode()
+  {
+    this._authLibraryService
+        .ForgetPassword(this.ForgetPassword.value)
+        .subscribe({
+          next: (res) => {
+            console.log(res);
+            if (res.message === 'success') {
+              this.step = 2;
+            }
+            this.isSpinner = false;
+          },
+          error: (err) => {
+            console.log(err);
+            this.isSpinner = false;
+          },
+        });
+    }
+  
+
   //*****************************   Rest Code **************************************** */
 
   RestCode: FormGroup = new FormGroup({

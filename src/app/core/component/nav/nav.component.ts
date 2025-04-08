@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { FlowbiteService } from '../../../shared/services/flowbite/flowbite.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-nav',
@@ -9,4 +11,11 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class NavComponent {
 
+  private readonly _FlowbiteService=inject(FlowbiteService)
+
+  ngOnInit(): void {
+      this._FlowbiteService.loadFlowbite(() => {
+        initFlowbite(); 
+      });
+    }
 }

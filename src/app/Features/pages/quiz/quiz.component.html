@@ -1,0 +1,47 @@
+<section class="flex flex-col md:flex-row bg-[#0000000D]">
+   
+    <div class="flex md:hidden justify-between items-center bg-blue-600 p-4">
+      <button class="text-white text-2xl" (click)="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+      <i class="fa-solid fa-magnifying-glass text-white text-xl"></i> 
+      <img src="/New folder/89b7d9a2fbcfd109b058718b5287b696.jfif" class="w-12 h-12 rounded-full" alt="User Avatar">
+    </div>
+  
+   
+    <div class="hidden md:block md:w-1/5 w-[193px] h-[311px] p-6 fixed md:relative z-50" 
+         [ngClass]="{'block': sidebarOpen, 'hidden': !sidebarOpen} ">
+      <img class="mb-8" src="/New folder/Final Logo 1.png" alt="">
+      <ul class="w-[193px]">
+        <li routerLink="/home" routerLinkActive="bg-[#4461F2] w-[193px] h-[46px] p-[8px] rounded-[10px] text-white"
+            class="mt-6 text-[#696F79] font-[600] text-[20px] flex items-center cursor-pointer">
+          <i class="fa-solid fa-chart-line text-[#4461F2] me-5"></i> Dashboard
+        </li>
+        <li routerLink="/quiz" routerLinkActive="bg-[#4461F2] w-[193px] h-[46px] p-[8px] rounded-[10px] text-white"
+            class="mt-6 flex items-center cursor-pointer text-[#696F79] font-[600] text-[20px]">
+          <i class="fa-solid fa-clock-rotate-left text-[#4461F2] me-5"></i> Quiz History
+        </li>
+        <li class="mt-12 flex text-[20px] font-[600] items-center cursor-pointer text-[#696F79]">
+          <i class="fa-solid fa-arrow-right-from-bracket text-[#4461F2] me-5"></i> Log Out
+        </li>
+      </ul>
+    </div>
+  
+    
+    <div class="md:w-3/4 w-full md:ms-12 ms-0 p-6">
+      <div class="hidden md:flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
+        <div class="relative w-full md:w-2/3">
+          <input type="search"
+                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-[20px] focus:ring-blue-500 focus:border-blue-500 w-full p-4 pl-10"
+                 placeholder="Search Quiz" required />
+          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
+        </div>
+        <button class="bg-[#4461F2] rounded-[20px] text-white px-8 py-4 w-full md:w-auto">
+          Start Quiz
+        </button>
+        <img src="/New folder/89b7d9a2fbcfd109b058718b5287b696.jfif"
+             class="w-16 h-16 rounded-full" alt="User Avatar">
+      </div>
+    </div>
+  </section>
+  

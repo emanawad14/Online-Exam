@@ -3,6 +3,7 @@
 export interface IQuestions {
   answers: Answer[];
   type: string;
+
   _id: string;
   question: string;
   correct: string;

@@ -1,5 +1,5 @@
 
-<section class="flex flex-col md:flex-row bg-[#0000000D]">
+<section class="flex flex-col md:flex-row h-[300vh] bg-[#0000000D]">
     
     <div class="flex md:hidden justify-between items-center bg-blue-600 p-4">
       <button class="text-white text-2xl" (click)="toggleSidebar()">
@@ -12,7 +12,7 @@
     
     <div class="hidden md:block md:w-1/5 w-[193px] h-[311px] p-6 fixed md:relative z-50" 
          [ngClass]="{'block': sidebarOpen, 'hidden': !sidebarOpen}">
-      <img class="mb-8" src="/New folder/Final Logo 1.png" alt="">
+      <img class="mb-8  e-span" src="/New folder/Final Logo 1.png" alt="">
       <ul class="w-[193px]">
         <li routerLink="/home" routerLinkActive="bg-[#4461F2] w-[193px] h-[46px] p-[8px] rounded-[10px] text-white"
             class="mt-6 text-[#696F79] font-[600] text-[20px] flex items-center cursor-pointer">
@@ -22,7 +22,10 @@
             class="mt-6 flex items-center cursor-pointer text-[#696F79] font-[600] text-[20px]">
           <i class="fa-solid fa-clock-rotate-left text-[#4461F2] me-5"></i> Quiz History
         </li>
-        <li     class="mt-12 flex text-[20px] font-[600] items-center cursor-pointer text-[#696F79]">
+        <li   
+        routerLink="/login" routerLinkActive="bg-[#4461F2] w-[193px] h-[46px] p-[8px] rounded-[10px] text-white"
+        (click)="logOut()"
+        class="mt-12 flex text-[20px] font-[600] items-center cursor-pointer text-[#696F79]">
           <i class="fa-solid fa-arrow-right-from-bracket text-[#4461F2] me-5"></i> Log Out
         </li>
       </ul>
@@ -33,7 +36,7 @@
       <div class="hidden md:flex flex-col md:flex-row justify-center items-center gap-4 md:gap-10">
         <div class="relative w-full md:w-2/3">
           <input type="search"
-                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-[20px] focus:ring-blue-500 focus:border-blue-500 w-full p-4 pl-10"
+           [(ngModel)]="text"      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-[20px] focus:ring-blue-500 focus:border-blue-500 w-full p-4 pl-10"
                  placeholder="Search Quiz" required />
           <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"></i>
         </div>
@@ -53,7 +56,7 @@
         {
 
 
-            <div class="Quizzes w-full max-w-[1063px] mx-auto rounded-[20px] mt-[40px] p-6 flex flex-wrap lg:flex-nowrap items-center gap-8 bg-white shadow-md">
+            <div class="Quizzes w-full max-w-[1063px] mx-auto rounded-[20px]  mt-[40px] p-6 flex flex-wrap lg:flex-nowrap items-center gap-8 bg-white shadow-md">
             
                 <div class="flex justify-center">
                     <img src="/New folder/89b7d9a2fbcfd109b058718b5287b696.jfif" class="w-[216px] h-[216px] rounded-lg object-cover" alt="">
@@ -69,9 +72,9 @@
                     </div>
             
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
                             <div class="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white shadow">
                                 <i class="fa-solid fa-flag text-[22px] text-[#4461F2]"></i>
                             </div>
@@ -82,7 +85,7 @@
                         </div>
             
                       
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
                             <div class="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white shadow">
                                 <i class="fa-solid fa-clock text-[22px] text-[#4461F2]"></i>
                             </div>
@@ -93,7 +96,7 @@
                         </div>
             
                        
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-2">
                             <div class="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white shadow">
                                 <i class="fa-solid fa-circle-check text-[22px] text-[#4461F2]"></i>
                             </div>
@@ -117,27 +120,28 @@
 
             <div class=" Quizzes  mt-12   rounded-[20px] pt-[32px] pb-[32px] ps-[16px] pe-[16px] bg-white shadow-md">
                 <div class="flex justify-between  items-center ">
-                    <h3 class="text-[24px] text-[#4461F2] font-medium">Quizes</h3>
-                    <h3 (click)="sendView()" class=" ms:w-auto ms:text-left  text-[24px] text-[#4461F2] font-medium cursor-pointer hidden md:block   ">View All</h3>
+                    <h3 (click)="changeData()" class=" text-[24px] text-[#4461F2] font-medium">Quizes</h3>
+                    <h3 [@quizes]="state" (click)="sendView()" class=" ms:w-auto ms:text-left  text-[24px] text-[#4461F2] font-medium cursor-pointer hidden md:block   ">View All</h3>
                 </div>
                 
                 <!-- Subject Cards -->
 
 
 
-                <div class=" home grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+                <div class=" home grid grid-cols-1 md:grid-cols-3 gap-3 mt-6">
                     @for (item of subjects  | search:text; track $index) {
                         <div class="relative bg-white shadow-lg rounded-lg overflow-hidden">
                             <img (click)="getAllSubject(item._id)" [src]="item.icon" alt="" class="w-full h-50 object-cover cursor-pointer ">
-                            <div class="absolute left-1/2 transform -translate-x-1/2 w-[80%] rounded-[9px]  p-2 bg-[#1931ca67] bottom-7 text-center">
+                            <div class="absolute left-1/2 transform -translate-x-1/2 w-[90%] rounded-[7px]  p-2 bg-[#1931ca67] bottom-7 text-center">
                                 <h2 class="text-white font-semibold">{{item.name}}</h2>
-                                <h2 class="text-[13px] font-[700] text-white">Voluptatem aut ut dignissimos blanditiis</h2>
+                                <h2 class="text-[12px] font-[700] text-white">Voluptatem aut ut dignissimos blanditiis</h2>
                             </div>
                         </div>
                     }
 
                     @empty {
-                        <h2 class="text-center text-3xl">Not Found Data</h2>
+                        <img  src="/New folder/ai-chip-artificial-intelligence-future-technology-innovation.jpg" alt="">
+                        <img  src="/New folder/ai-chip-intelligence-technology-deep-learning.jpg" alt="">
                     }
                 </div>
 
@@ -151,7 +155,7 @@
         
         @else if (step==2)
          {
-            <div class="mt-12">
+            <div class="mt-12 ">
                 <h1 class="text-[18px] font-[500]">Front-End Quiz</h1>
                 @for (exam of exams; track exam._id; let i=$index) {
                     <div class="flex flex-col md:flex-row justify-between items-center bg-[#F9F9F9] p-4 rounded-lg mt-4">
@@ -188,15 +192,8 @@
 
 
 
-
-
-
-  
- 
- 
-
     <div #items id="static-modal" data-modal-backdrop="static"
-    tabindex="-1" aria-hidden="true" class="hidden bg-slate-800 bg-opacity-40
+    tabindex="-1" aria-hidden="true" class="hidden bg-slate-950 bg-opacity-40
      overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center
       items-center w-full h-screen">
        <div class="relative p-4 w-full max-w-lg">
@@ -222,76 +219,192 @@
             
         }
         @else if (questiontype==3) {
-          
-            
-          <div class="flex justify-center items-center px-4">
-                <div class="bg-white shadow-lg rounded-lg p-6  max-w-[686px]  mx-auto" *ngIf="questions.length > 0">
-                  
-               
+        
+              <div *ngIf="!showResult">
+              <div class="flex justify-center items-center px-4">
+                <div class="bg-white shadow-lg rounded p-6 max-w-[686px] mx-auto" *ngIf="questions.length > 0">
                   <div class="flex justify-between items-center">
                     <p class="text-sm text-blue-600 font-semibold">
-                      Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}  
+                      Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
                     </p>
-                   
+                    
                     <div class="flex justify-center items-center gap-3">
-                        <i class="fa-solid fa-clock-rotate-left fa-spin fa-spin-reverse text-[#25679c] text-[24px]"></i>
-                        <h1 class="text-sm md:text-base text-[#11CE19] text-[24px] ">
-                           
-                          {{ questions[currentQuestionIndex]?.exam?.duration }}
-                        </h1>
+                      <i class="fa-solid fa-clock fa-beat-fade text-[24px]"
+
+                      
+                         [ngClass]="{'text-red-600': remainingTime <= 60, 'text-blue-600': remainingTime > 60}">
+                      </i>
+                      <h1 class="text-sm md:text-base text-[24px]" 
+                          [ngClass]="{'text-red-600': remainingTime <= 60, 'text-[#11CE19]': remainingTime > 60}">
+                        {{ formatTime(remainingTime) }}
+                      </h1>
                     </div>
                   </div>
-            
-                 
+
                   <div class="flex items-start justify-center mt-8 gap-7 my-2">
-                    <span 
-                      *ngFor="let _ of questions; let i = index"
-                      class="w-2 h-2 rounded-full"
-                      [ngClass]="{ 'bg-blue-600': i === currentQuestionIndex, 
-                      'bg-gray-400': i !== currentQuestionIndex }">
+                    <span *ngFor="let _ of questions; let i = index" class="w-2 h-2 rounded-full"
+                      [ngClass]="{
+                        'bg-blue-600': i === currentQuestionIndex,
+                        'bg-gray-400': i !== currentQuestionIndex
+                      }">
                     </span>
                   </div>
+            
+                  <h2 class="text-lg font-semibold mt-8 text-center md:text-left">
+                    {{ questions[currentQuestionIndex]?.question }}
+                  </h2>
+
+                
                   
             
-                 
-                  <h2 class="text-lg font-semibold mt-8 text-center md:text-left"> {{ questions[currentQuestionIndex]?.question }} </h2>
-            
-              
                   <div class="mt-4 space-y-2" *ngFor="let answer of questions[currentQuestionIndex]?.answers">
-                    <label class="flex items-center bg-[#EDEFF3] text-[#0F0F0F] p-3 border rounded-lg cursor-pointer w-full">
-                      <input type="radio" name="answer" class="w-5 h-5 border-2 border-blue-600 rounded-full flex items-center cursor-pointer justify-center mr-3" required>
-                      <span class="w-2.5 h-2.5 bg-[#EDEFF3] rounded-full"></span>
-                      <h2 class="truncate w-full">{{ answer.answer }}</h2>
+                    <label class="flex items-center bg-[#EDEFF3] text-[#0F0F0F] p-3 border rounded-lg cursor-pointer w-full"
+
+                    >
+                                <input type="radio"  name="answer{{currentQuestionIndex}}"
+                                       [value]="answer.key"
+                                         [checked]="chosenAnswers[currentQuestionIndex] === answer.key"
+                                           (change)="chooseAnswer(answer.key)"
+                                             class="w-5 h-5 border-2 border-blue-600 rounded-full cursor-pointer mr-3"/>
+
+
+                      <h2 class=" w-full">{{ answer.answer }}</h2>
                     </label>
                   </div>
             
-                
                   <div class="flex flex-col md:flex-row justify-center items-center mt-6 gap-4">
-                    <button (click)="previousQuestion()" [disabled]="currentQuestionIndex == 0" 
-                      class="border-[1px] font[500] text-[24px] w-full md:w-[295px] h-[56px] bg-white text-[#4461F2] rounded-full disabled:bg-[#1D1B201F] text-[#000000]">
+                    <button (click)="previousQuestion()" [disabled]="currentQuestionIndex == 0"
+                      class="border-[1px] text-[24px] w-full md:w-[295px] h-[56px] bg-[#4461F2] text-white rounded-full disabled:bg-gray-400">
                       Back
                     </button>
             
-                    <button (click)="nextQuestion()" [disabled]="currentQuestionIndex == questions.length - 1" 
-                      class="border-[1px] font[500] text-[24px] w-full md:w-[295px] h-[56px] bg-white text-[#4461F2] rounded-full disabled:bg-[#1D1B201F] text-[#000000]">
-                      Next
-                    </button>
+                    <button 
+                    (click)="nextQuestion()"
+                    [disabled]="!chosenAnswers[currentQuestionIndex] || currentQuestionIndex == questions.length - 1"
+                    class="border-[1px] text-[24px] w-full md:w-[295px] h-[56px] bg-[#4461F2] text-white rounded-full disabled:bg-gray-400">
+                    Next
+                  </button>
                   </div>
-            
                 </div>
-            </div> 
-            
+              </div>
+            </div>
+         
+        
 
-           
-            
-              
+
+          
+             
 
         }
+
+        @else if (questiontype==4) 
+        {
+       
+          <div *ngIf="isQuizFinished" class="result-modal p-3 md:p-6">
+            <h2 class="text-base md:text-lg font-semibold text-start mb-3">Your Score</h2>
+          
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10">
+              <p-chart
+                type="doughnut"
+                [data]="chartData"
+                [options]="{ cutout: '80%' }"
+                styleClass="w-[160px] h-[160px] md:w-[220px] md:h-[220px]">
+              </p-chart>
+          
+              <div class="score-details text-center">
+                <p class="text-blue-500 font-medium text-sm mb-2">
+                  Correct: <span class="count">{{ correctAnswers }}</span>
+                </p>
+                <p class="text-red-500 font-medium text-sm mb-2">
+                  Incorrect: <span class="count">{{ incorrectAnswers }}</span>
+                </p>
+              </div>
+            </div>
+          
+            <div class="button-container flex flex-col md:flex-row items-center justify-center gap-3 mt-4">
+              <button
+                (click)="isQuizFinished = false"
+                class="btn-back w-full md:w-[260px] h-[44px] rounded-full bg-gray-200 hover:bg-gray-300 text-sm">
+                Back
+              </button>
+              <button
+                (click)="showResults()"
+                class="btn-show-results w-full md:w-[260px] h-[44px] rounded-full bg-[#4461F2] text-white hover:bg-[#3650cc] text-sm">
+                Show results
+              </button>
+            </div>
+          </div>
+          
+          
+          <button
+            *ngIf="currentQuestionIndex === questions.length - 1 && !isQuizFinished"
+            (click)="finishQuiz()"
+            class="finish-btn mt-4 w-full md:w-auto px-4 py-2 rounded-full bg-green-500 text-white text-sm hover:bg-green-600">
+            Finish Quiz
+          </button> 
+        
+       
+          
+
+        } 
+
+        @else if (questiontype==5) 
+        {
+         
+          
+          
+       
+         <div class="p-4 mt-10 max-w-[1200px] mx-auto h-[calc(100vh-150px)]">
+            <div class="p-6 rounded h-full">
+              
+             
+              <div class="h-full overflow-y-auto overflow-x-hidden grid grid-cols-1 md:grid-cols-1 gap-4 pr-2">
+                <div *ngFor="let question of wrongAnswers" class="bg-gray-100 p-4 rounded shadow">
+                  <h4 class="font-semibold text-lg mb-2">{{ question.question }}</h4>
+          
+                  <div *ngFor="let answer of question.answers" class="mt-4">
+                    <div
+                      class="p-2 rounded text-[12px]"
+                      [ngClass]="{
+                        'bg-green-600 text-white': answer.key === question.correct, 
+                        'bg-red-500 text-white': chosenAnswers[question._id] === answer.key && answer.key !== question.correct,
+
+                        'bg-gray-400 text-white': answer.key !== question.correct && selectedAnswers[question._id] !== answer.key
+                      }"
+                    >
+                      {{ answer.answer }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+         
+          <div class="flex justify-center mt-6">
+            <button
+              (click)="calculateResults()"
+              class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600 transition"
+            >
+              Incorrect Answers
+            </button>
+          </div>
+          
+          
+          
+         
+          
+
+
+        }
+
+        
 
        </div>
    </div>
 
 
- 
+
+   
   
    

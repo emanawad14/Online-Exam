@@ -1,10 +1,19 @@
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ListboxModule } from 'primeng/listbox';
+
+
+interface Question {
+  question: string;
+  options: string[];
+  answer: number;
+  selected?: number| null;
+}
 
 @Component({
   selector: 'app-quiz',
-  imports: [ RouterLink , RouterLinkActive , NgClass],
+  imports: [ RouterLink , RouterLinkActive , NgClass ,NgIf ,ListboxModule ] ,
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.scss'
 })
@@ -20,4 +29,7 @@ export class QuizComponent {
   }
 
 
+ 
+  
+  
 }

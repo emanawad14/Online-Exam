@@ -120,8 +120,12 @@ export class ForgetpasswordComponent {
         next: (res) => {
           console.log(res);
 
-          localStorage.setItem('userToken', res.token);
-          this._Router.navigate(['/home']);
+          localStorage.setItem('setToken', res.token);
+          
+          if(res.message =='success')
+          {
+            this._Router.navigate(['/home']);
+          }
           this.isSpinner = false;
         },
         error: (err) => {

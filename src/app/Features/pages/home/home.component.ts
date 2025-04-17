@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild, viewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HomeservicService } from '../../services/home/homeservic.service';
 import { Isubject } from '../../interfaces/isubject';
 import { Iexam } from '../../interfaces/iexam';
@@ -12,19 +12,54 @@ import { SearchPipe } from '../../pipes/search.pipe';
 import { FormsModule } from '@angular/forms';
 import { NgClass, NgFor, NgForOf, NgIf, SlicePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
+import { ChartModule } from 'primeng/chart';
+
+
+
 
 
 @Component({
   selector: 'app-home',
-  imports: [SearchPipe , FormsModule , NgClass , NgFor , NgForOf , NgIf , RouterLink , RouterLinkActive],
+  imports: [SearchPipe , FormsModule , NgClass , NgFor , NgForOf , NgIf , RouterLink , RouterLinkActive , ChartModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  animations:
+  [
+    trigger('quizes' ,[
+        state('normal',style({
+          color:"#4461F2",
+          transform:"translatey(0px)"
+        })),
+        state('hilighted',style({
+          backgroundColor:"#4461F2",
+          color:'white',
+          borderRadius:'4px',
+          transform:"translatey(-30px) scale(.5) ",
+          padding:"4px",
+          //transform:"rotate(180deg) scale(.5)"
+        })),
+        transition("normal => hilighted" , animate(300)),
+        transition("hilighted => normal" ,animate(800)
+         
+        
+        ),
+
+      ])
+    
+  ]
 
 })
 export class HomeComponent  implements OnInit , AfterViewInit  , OnDestroy{
-
+ 
   
+  
+  state='normal'
 
+  changeData(){
+    this.state=this.state=='normal'?'hilighted':'normal'
+  }
   
   
   
@@ -43,7 +78,31 @@ export class HomeComponent  implements OnInit , AfterViewInit  , OnDestroy{
   questiontype:number=2
   currentQuestionIndex: number = 0;
   sidebarOpen: boolean = false;
+  selectedAnswerIndex: number | null = null;
 
+  selectedAnswerss: string[] = [];
+
+  score: number = 0;
+  isQuizFinished: boolean = false;
+  
+  incorrectQuestions: any[] = [];
+
+  selectedAnswers: { [key: string]: string } = {};
+  showResult = false;
+  correctAnswersCount = 0;
+  wrongAnswers: IQuestions[] = [];
+  
+  chartData: any;
+  chartOptions: any;
+
+
+  remainingTime: number = 600; 
+  timerInterval: any;
+
+
+  correctAnswers = 0;
+  incorrectAnswers = 0;
+  scorePercentage = 0;
 
 
 
@@ -55,9 +114,10 @@ export class HomeComponent  implements OnInit , AfterViewInit  , OnDestroy{
 
 
   ngOnInit(): void {
-    this.sendData()
+    this.sendData();
    
-
+    this.startTimer();
+    
   }
 
 
@@ -93,6 +153,12 @@ openModel(index:number)
   modal.show()
 }
 
+
+
+
+toggleSidebar() {
+  this.sidebarOpen = !this.sidebarOpen;
+  }
 //************************************************** */
 
 
@@ -101,11 +167,6 @@ openModel(index:number)
     
     
   }
-
-
-
- 
-  
 
   
   //******************** SendData *************************** */
@@ -116,12 +177,7 @@ openModel(index:number)
       next:(res)=>
       {
          console.log(res);
-         this.subjects=res.subjects
-      
-        
-         
-        
-         
+         this.subjects=res.subjects 
          
       },
       error:(err)=>
@@ -221,18 +277,6 @@ openModel(index:number)
     )
   }
 
-
-  
-  
-
-
-
-
-
-
-
-
-
   //************************** logOut  ******************************* */
 
   logOut()
@@ -247,10 +291,7 @@ openModel(index:number)
         },
         error:(err)=>
         {
-          console.log(err);
-         
-          
-          
+          console.log(err); 
         }
       }
     )
@@ -260,57 +301,149 @@ openModel(index:number)
           
   }
 
-
-  // ****************************************
-
-  
-  
+// ***************** Select Answer  ***************************
 
 
-  ngOnDestroy(): void {
-      this.homeSubscribtion.unsubscribe()
-  }
+selectOption(index:number)
+{
+  this.selectedAnswerIndex=index
+}
 
 
+selectAnswerr(answerKey:string)
+{
+  this.selectedAnswers[this.currentQuestionIndex]=answerKey
+}
 
-
-
-
-
-
-
-  
-
-
+//*************************************************************** */
 
 
  
+
+
+
+  selectAnswer(answerKey: string) {
+    this.selectedAnswers[this.questions[this.currentQuestionIndex]._id] = answerKey;
+  }
+
+ 
+  chosenAnswers: { [key: number]: string } = {}; 
   
-nextQuestion() {
-  if (this.currentQuestionIndex < this.questions.length - 1) {
-    this.currentQuestionIndex++;
+chooseAnswer(answerKey: string) {
+  this.chosenAnswers[this.currentQuestionIndex] = answerKey;
+}
+
+ 
+  
+
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex ++;
+      if(this.currentQuestionIndex===this.questions.length-1)
+            {
+              this.questiontype=4
+             }
+    }
+     
     
-    console.log(`Current Question Index after update: ${this.currentQuestionIndex}`);
-    console.log(`Current Question: ${this.questions[this.currentQuestionIndex].question}`);
   }
-}
 
-previousQuestion() {
-  if (this.currentQuestionIndex > 0) { 
-    this.currentQuestionIndex--;
+  previousQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+    }
+  }
+
+// **********************************************************
+finishQuiz() {
+  this.correctAnswers = 0;
+  this.incorrectAnswers = 0;
+  this.questions.forEach((question, index) => {
+    const selected = this.chosenAnswers[index];
+    const correct = question.correct;
     
-    console.log(`Current Question Index after update: ${this.currentQuestionIndex}`);
-    console.log(`Current Question: ${this.questions[this.currentQuestionIndex].question}`);
-  }
+    if (selected === correct) {
+      this.correctAnswers++;
+    } else {
+      this.incorrectAnswers++;
+    }
+  });
+
+  this.chartData = {
+    labels: ['Correct', 'Incorrect'],
+    datasets: [
+      {
+        data: [this.correctAnswers, this.incorrectAnswers],
+        backgroundColor: ['#11CE19', '#F44336']
+      }
+    ]
+  };
+
+  this.isQuizFinished = true;
 }
 
 
 
 
 
-toggleSidebar() {
-  this.sidebarOpen = !this.sidebarOpen;
+
+
+
+
+showResults()
+{
+  this.questiontype=5
 }
+
+
+
+
+
+startTimer() {
+  this.timerInterval = setInterval(() => {
+    if (this.remainingTime > 0) {
+      this.remainingTime--;
+    } else {
+      this.finishQuiz();
+    }
+  }, 1000);
+}
+
+formatTime(seconds: number): string {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${minutes}:${secs < 25 ? '0' : ''}${secs}`;
+}
+
+
+
+calculateResults() {
+  this.wrongAnswers = [];
+
+  this.questions.forEach((question, index) => {
+    const selected = this.chosenAnswers[index]; 
+    
+    if (selected !== question.correct) {
+      this.wrongAnswers.push({
+        ...question,
+      
+        correct: question.correct,
+        _id: index 
+      });
+    }
+  });
+}
+
+
+
+
+
+
+ngOnDestroy(): void {
+  this.homeSubscribtion.unsubscribe()
+}
+
+
 
 
 }

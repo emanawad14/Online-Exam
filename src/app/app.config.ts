@@ -13,6 +13,10 @@ import { authReducer } from './store/auth.reducer';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { loadingInterceptor } from './core/interceptors/loading/loading.interceptor';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
@@ -21,6 +25,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(), 
     importProvidersFrom(NgxSpinnerModule),
+    provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        }),
      provideStore(
       {
         Auth:authReducer

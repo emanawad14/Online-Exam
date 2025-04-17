@@ -3,13 +3,14 @@
 export interface IQuestions {
   answers: Answer[];
   type: string;
-
-  _id: string;
+  
+  _id: number;
   question: string;
   correct: string;
   subject: Subject;
   exam: Exam;
   createdAt: string;
+  
 }
 
 interface Exam {

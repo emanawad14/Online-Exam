@@ -106,12 +106,10 @@ export class ForgetpasswordComponent {
   }
 
   //*****************************   RestPassword  **************************************** */
-
   PasswordRest: FormGroup = new FormGroup({
     email: new FormControl(null, [Validators.required, Validators.email]),
     newPassword: new FormControl(null, [Validators.required]),
   });
-
   SumbitPassword() {
     console.log(this.PasswordRest.value);
     if (this.PasswordRest.valid) {

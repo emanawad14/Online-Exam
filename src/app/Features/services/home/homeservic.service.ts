@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HomeservicService {
+
+
+  
   myToken:any=localStorage.getItem('setToken')
 
   constructor( private httpclient:HttpClient) { }

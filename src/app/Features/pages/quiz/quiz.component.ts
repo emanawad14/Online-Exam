@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ListboxModule } from 'primeng/listbox';
 
@@ -29,7 +29,8 @@ export class QuizComponent {
   }
 
 
- 
+  
+  
   
   
 }
